@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!--output text--!>
+	<p id="output">Default text</p>
+	<!--input area=api key + button--!>
+	<input id="user_number">
+	<button onclick="fetchdata()">Submit</button>
+	<script type="text/javascript">
+		function fetchdata()
+		{
+			//create api key
+			api_key=document.getElementById("user_number").value;
+			console.log(api_key);
+			//create xmlhttpreq obj and make a call to web api
+			httprequest= new XMLHttpRequest();
+			httprequest.open("GET","https://reqres.in/api/users/"+api_key);
+			httprequest.send();
+			
+			//get response from server and parse it and display on browser
+			httprequest.onreadystatechange = function(){
+				if(this.readyState==4 && this.status==200)
+				{
+					rcvddata= JSON.parse(this.responseText);
+					document.getElementById("output").innerHTML=rcvddata.data.first_name;
+				}
+			}
+			
+		}
+	</script>
+</body>
+</html>
